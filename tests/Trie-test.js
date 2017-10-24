@@ -37,7 +37,6 @@ describe('Phase one testing', () => {
 
 	it('should keep a count of how many words have been inserted', () => {
 
-		
 		binaryTree.insert('cat');
 		expect(binaryTree.count).to.equal(1);
 		
@@ -52,6 +51,17 @@ describe('Phase one testing', () => {
 
 		binaryTree.populate(dictionary);
 		expect(binaryTree.count).to.equal(235886);
+	});
+
+});
+
+describe('Suggest testing', () => {
+
+	it('should return an array', () => {
+
+	binaryTree.insert('pizza');
+	expect(binaryTree.suggest('piz')).to.be.an('array');
+	// expect(binaryTree.suggest('pizz')).to.deep.equal('pizza');
 	});
 
 });
