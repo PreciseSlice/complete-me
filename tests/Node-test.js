@@ -10,7 +10,7 @@ describe('NODE', () => {
     expect(node).to.exist;
   });
 
-  it('should take letter and assign it to data prop', () => {
+  it('should take an argument for letter and assign it to data prop', () => {
     node = new Node('a');
 
     expect(node.letter).to.equal('a');

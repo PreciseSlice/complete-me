@@ -3,54 +3,57 @@ const text = "/usr/share/dict/words";
 const dictionary = fs.readFileSync(text).toString().trim().split('\n');
 
 import { expect } from 'chai';
-import BinaryTree from '../lib/Trie.js';
+import PrefixTree from '../lib/Trie.js';
 import Node from '../lib/Node.js';
 
-let binaryTree;
+let prefixTree;
 let node;
 
 describe('Phase one testing', () => {
 
 	  beforeEach(() => {
-    binaryTree = new BinaryTree();
+    prefixTree = new PrefixTree();
     node = new Node('');
   });
 
-	it('should create a BinaryTree object', () => {
 
+	it('should create a prefixTree object', () => {
 
-    expect(binaryTree).to.be.an('object');
+    expect(prefixTree).to.be.an('object');
   });
+
+	it('Should be able to take in a word', () => {
+		prefixTree.insert('pizza');
+		expect(
+			prefixTree.root.children
+			.p.children
+			.i.children
+			.z.children
+			.z.children
+			.a.letter).to.equal('a');
+	});
 
   it('should have a node as the root', () => {
  
-  	expect(binaryTree.root).to.deep.equal(node);
+  	expect(prefixTree.root).to.deep.equal(node);
   });
-
-	it.skip('should be able to take in a word', () => {
-
-
-		binaryTree.insert('p');
-
-    expect(binaryTree.root.data).to.equal('p');
-	});
 
 	it('should keep a count of how many words have been inserted', () => {
 
-		binaryTree.insert('cat');
-		expect(binaryTree.count).to.equal(1);
+		prefixTree.insert('cat');
+		expect(prefixTree.count).to.equal(1);
 		
-		binaryTree.insert('dog');
-		expect(binaryTree.count).to.equal(2);
+		prefixTree.insert('dog');
+		expect(prefixTree.count).to.equal(2);
 		
-		binaryTree.insert('bird');
-		expect(binaryTree.count).to.equal(3);
+		prefixTree.insert('bird');
+		expect(prefixTree.count).to.equal(3);
 	});
 
 	it('should populate a dictionary', () => {
 
-		binaryTree.populate(dictionary);
-		expect(binaryTree.count).to.equal(235886);
+		prefixTree.populate(dictionary);
+		expect(prefixTree.count).to.equal(235886);
 	});
 
 });
@@ -59,9 +62,8 @@ describe('Suggest testing', () => {
 
 	it('should return an array', () => {
 
-	binaryTree.insert('pizza');
-	expect(binaryTree.suggest('piz')).to.be.an('array');
-	// expect(binaryTree.suggest('pizz')).to.deep.equal('pizza');
+	expect(prefixTree.suggest('pizz')).to.be.an('array');
+	expect(prefixTree.suggest('pizz')).to.deep.equal(['pizza', 'pizzeria', 'pizzicato', 'pizzle']);
 	});
 
 });
