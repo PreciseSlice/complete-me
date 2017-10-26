@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import Node from '../lib/Node';
 
-describe('NODE', () => {
+describe('Node unit testing', () => {
   let node;
 
   it('should be a thing', () => {
@@ -10,10 +10,10 @@ describe('NODE', () => {
     expect(node).to.exist;
   });
 
-  it('should take an argument for letter and assign it to data prop', () => {
-    node = new Node('a');
+  it('should take an arguments for letter and wordEnd, assigning the arguments to data props', () => {
+    node = new Node('a', 'b');
 
-    expect(node.letter).to.equal('a');
+    expect(node.letter).to.equal('a', 'b');
   });
 
 });
