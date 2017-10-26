@@ -14,6 +14,7 @@ let node;
     node = new Node('');
   });
 
+
 describe('PrefixTree unit testing', () => {
 
 
@@ -148,6 +149,7 @@ describe('PrefixTree unit testing', () => {
 		});
 	});
 
+
 	describe('Select method unit testing', () => {
 
 		it('should be a function', () => {
@@ -164,18 +166,4 @@ describe('PrefixTree unit testing', () => {
 			expect(prefixTree.root.children.c.children.a.children.t.popularity).to.equal(2);
 		});
 	});
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
