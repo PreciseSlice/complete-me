@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import Node from '../lib/Node';
 
 describe('Node unit testing', () => {
+  
   let node;
 
   it('should be a thing', () => {
