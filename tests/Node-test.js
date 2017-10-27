@@ -17,4 +17,16 @@ describe('Node unit testing', () => {
     expect(node.letter).to.equal('a', 'b');
   });
 
+  it('should have a children which are an empty array ', () => {
+    node = new Node();
+
+    expect(node.children).to.deep.equal({});
+  });
+
+  it('should have popularity set to 0 by default', () => {
+    node = new Node();
+
+    expect(node.popularity).to.equal(0);
+  });
+
 });
