@@ -1,14 +1,13 @@
 import fs from 'fs';
-const text = "/usr/share/dict/words";
-const dictionary = fs.readFileSync(text).toString().trim().split('\n');
-
 import { expect } from 'chai';
 import PrefixTree from '../lib/Trie.js';
 import Node from '../lib/Node.js';
 
+const text = "/usr/share/dict/words";
+const dictionary = fs.readFileSync(text).toString().trim().split('\n');
+
 let prefixTree;
 let node;
-
 
 
 describe('PrefixTree unit testing', () => {
@@ -30,11 +29,12 @@ describe('PrefixTree unit testing', () => {
   });
 });
 
+
 describe('Insert method unit testing', () => {
 
 	beforeEach(() => {
-  prefixTree = new PrefixTree();
-  node = new Node('');
+  	prefixTree = new PrefixTree();
+  	node = new Node('');
   });
 
 	it('should be a function', () => {
@@ -91,14 +91,15 @@ describe('Insert method unit testing', () => {
 			.z.children
 			.a.wordEnd).to.equal(true);
 	});
+
 });
 
 
 describe('Count unit testing', () => {
 
 	beforeEach(() => {
-  prefixTree = new PrefixTree();
-  node = new Node('');
+  	prefixTree = new PrefixTree();
+  	node = new Node('');
  	});
 
 	it('should keep a count of how many words have been inserted', () => {
@@ -125,14 +126,15 @@ describe('Count unit testing', () => {
 		prefixTree.insert('pizza');
 		expect(prefixTree.wordCount).to.equal(1);
 	});
+
 });
 
 
 describe('Suggest method unit testing', () => {
 
 	beforeEach(() => {
-  prefixTree = new PrefixTree();
-  node = new Node('');
+  	prefixTree = new PrefixTree();
+  	node = new Node('');
   });
 
 	it('should be a function', () => {
@@ -157,6 +159,7 @@ describe('Suggest method unit testing', () => {
 		prefixTree.insert('PIZZ');
 		expect(prefixTree.suggest('pizz')).to.deep.equal(['pizza', 'pizzeria', 'pizzicato', 'pizzle']);
 	});
+
 	it('should return all complete words if suggesting an empty string', () => {
 
 		prefixTree.insert('cat');
@@ -165,15 +168,48 @@ describe('Suggest method unit testing', () => {
 
 		expect(prefixTree.suggest('')).to.deep.equal(['cat', 'dog', 'snake']);
 	});
+
 });
 
+
+describe('Select method unit testing', () => {
+	
+	beforeEach(() => {
+		prefixTree = new PrefixTree();
+		node = new Node('');
+  });
+	
+	it('should be a function', () => {
+		
+		expect(prefixTree.select).to.be.a('function');
+	});
+	
+	it('should increment word popularity every time a word is selected', () => {
+		
+		prefixTree.insert('cat');
+		expect(prefixTree.root.children.c.children.a.children.t.popularity).to.equal(0);
+		prefixTree.select('cat');
+		expect(prefixTree.root.children.c.children.a.children.t.popularity).to.equal(1);
+		prefixTree.select('cat');
+		expect(prefixTree.root.children.c.children.a.children.t.popularity).to.equal(2);
+	});
+	
+	it('should effect the order of the suggestions array', () => {
+		
+		prefixTree.insert('cat');
+		prefixTree.insert('dog');
+		expect(prefixTree.suggest('')).to.deep.equal(['cat', 'dog']);
+		prefixTree.select('dog');
+		expect(prefixTree.suggest('')).to.deep.equal(['dog', 'cat']);
+	});
+});
 
 describe('Populate dictionary method unit testing', () => {
 
 	beforeEach(() => {
-  prefixTree = new PrefixTree();
-  node = new Node('');
-  });
+		prefixTree = new PrefixTree();
+		node = new Node('');
+	});
 
 	it('should be a function', () => {
 
@@ -194,37 +230,32 @@ describe('Populate dictionary method unit testing', () => {
 		prefixTree.populate('cat');
 		expect(prefixTree.wordCount).to.equal();
 	});
+
 });
 
-
-describe('Select method unit testing', () => {
-
+describe.only('delete method unit testing', () => {
+	
 	beforeEach(() => {
-  prefixTree = new PrefixTree();
-  node = new Node('');
-  });
-
-	it('should be a function', () => {
-
-		expect(prefixTree.select).to.be.a('function');
+		prefixTree = new PrefixTree();
+		node = new Node('');
 	});
 
-	it('should increment word popularity every time a word is selected', () => {
-		
+	it('should be an method', () => {
+		expect(prefixTree.delete).to.be.a('function');
+	});
+
+	it('should delete a word from suggested words', () => {
 		prefixTree.insert('cat');
-		expect(prefixTree.root.children.c.children.a.children.t.popularity).to.equal(0);
-		prefixTree.select('cat');
-		expect(prefixTree.root.children.c.children.a.children.t.popularity).to.equal(1);
-		prefixTree.select('cat');
-		expect(prefixTree.root.children.c.children.a.children.t.popularity).to.equal(2);
-	});
+		prefixTree.insert('cats');
+		prefixTree.insert('catch');
+		prefixTree.insert('catheter');
+		prefixTree.insert('catatonic');
 
-	it('should effect the order of the suggestions array', () => {
-		
-		prefixTree.insert('cat');
-		prefixTree.insert('dog');
-		expect(prefixTree.suggest('')).to.deep.equal(['cat', 'dog']);
-		prefixTree.select('dog');
-		expect(prefixTree.suggest('')).to.deep.equal(['dog', 'cat']);
+		expect(prefixTree.suggest('ca')).to.deep.equal(['cat', 'cats', 'catch', 'catheter', 'catatonic']);
+
+		prefixTree.delete('cat');
+
+		expect(prefixTree.suggest('ca')).to.deep.equal(['cats', 'catch', 'catheter', 'catatonic']);
 	});
+	
 });
