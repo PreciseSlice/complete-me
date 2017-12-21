@@ -233,29 +233,20 @@ describe('Populate dictionary method unit testing', () => {
 
 });
 
-describe.only('delete method unit testing', () => {
+// describe.only('delete method unit testing', () => {
 	
-	beforeEach(() => {
-		prefixTree = new PrefixTree();
-		node = new Node('');
-	});
+// 	beforeEach(() => {
+// 		prefixTree = new PrefixTree();
+// 		node = new Node('');
+// 	});
 
-	it('should be an method', () => {
-		expect(prefixTree.delete).to.be.a('function');
-	});
+// 	it('should be an method', () => {
+// 		expect(prefixTree.delete).to.be.a('function');
+// 	});
 
-	it('should delete a word from suggested words', () => {
-		prefixTree.insert('cat');
-		prefixTree.insert('cats');
-		prefixTree.insert('catch');
-		prefixTree.insert('catheter');
-		prefixTree.insert('catatonic');
+// 	it('should delete specific words', () => {
 
-		expect(prefixTree.suggest('ca')).to.deep.equal(['cat', 'cats', 'catch', 'catheter', 'catatonic']);
-
-		prefixTree.delete('cat');
-
-		expect(prefixTree.suggest('ca')).to.deep.equal(['cats', 'catch', 'catheter', 'catatonic']);
-	});
+// 	});
 	
-});
+// });
+
