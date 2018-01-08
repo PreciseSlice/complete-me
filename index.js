@@ -1,4 +1,4 @@
 const node = require('./lib/Node');
-const prefixTree = require('./lib/Trie');
+const prefixTrie = require('./lib/Trie');
 
-module.exports = {node, prefixTree};
+module.exports = {node, prefixTrie};
