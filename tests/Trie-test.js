@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { expect } from 'chai';
-import prefixTrie from '../lib/Trie.js';
+import PrefixTrie from '../lib/Trie.js';
 import Node from '../lib/Node.js';
 
 const text = "/usr/share/dict/words";
@@ -10,7 +10,7 @@ let prefixTrie;
 let node;
 
 beforeEach(() => {
-	prefixTrie = new prefixTrie();
+	prefixTrie = new PrefixTrie();
 	node = new Node('');
 });
  
@@ -18,8 +18,8 @@ describe('prefixTrie unit testing', () => {
 
 	it('should create a prefixTrie object', () => {
  		expect(prefixTrie).to.be.an('object');
-  });
-
+	});
+	
 
   it('should have a node as the root', () => {
   	expect(prefixTrie.root).to.deep.equal(node);
@@ -68,7 +68,7 @@ describe('Insert method unit testing', () => {
 		});
 	
 	it('should convert characters enetered to lower case', () => {
-	  let prefixTrie = new prefixTrie();
+	  let prefixTrie = new PrefixTrie();
 
 		prefixTrie.populate(dictionary);
 		prefixTrie.insert('PIZZ');
@@ -93,7 +93,7 @@ describe('Insert method unit testing', () => {
 describe('Count unit testing', () => {
 
 	it('should keep a count of how many words have been inserted', () => {
-		let prefixTrie = new prefixTrie();
+		let prefixTrie = new PrefixTrie();
 
 		expect(prefixTrie.wordCount).to.equal(0);
 		prefixTrie.insert('cat');
@@ -107,7 +107,7 @@ describe('Count unit testing', () => {
 	});
 
 	it('should not add the same word twice to the tree', () => {
-		let	prefixTrie = new prefixTrie();
+		let	prefixTrie = new PrefixTrie();
 
 		expect(prefixTrie.wordCount).to.equal(0);
 		prefixTrie.insert('pizza');
